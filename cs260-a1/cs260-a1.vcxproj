@@ -115,7 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="list.h" />
+    <ClInclude Include="UnOrderedList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LinkedListTest.cpp" />
