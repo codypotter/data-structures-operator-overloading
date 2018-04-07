@@ -1,3 +1,9 @@
+/*
+	Program:	CS-260 A1
+	Author:		Cody Potter
+	Date:		2018-04-06
+	Purpose:	main function to test unordered linked list class
+*/
 #include"UnOrderedList.h"
 #include"Student.h"
 #include<iostream>
@@ -44,6 +50,7 @@ int main(void) {
 
 	charList->removeAll();
 	charList->print();
+	cout << endl;
 	delete charList;
 
 	// test it on Students ------------------------------------
@@ -61,6 +68,5 @@ int main(void) {
 	studentList.removeAll();
 	studentList.print();
 
-	cin.ignore(999, '/n');
 	return 0;
 }

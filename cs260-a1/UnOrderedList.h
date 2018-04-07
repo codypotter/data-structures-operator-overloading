@@ -1,9 +1,9 @@
 /*
-Program:	CS-260 A1
-Author:		Cody Potter
-Date:		2018-04-06
-Purpose:	Unordered List class for a singly linked list in
-			a generic template form
+	Program:	CS-260 A1
+	Author:		Cody Potter
+	Date:		2018-04-06
+	Purpose:	Unordered List class for a singly linked list in
+				a generic template form
 */
 #pragma once
 #include<iostream>
@@ -74,12 +74,12 @@ bool UnOrderedList<dataType>::remove(const dataType valueToRemove) {
 	Node* previous = NULL;
 
 	while (current) {
-		if (current->value == valueToRemove && !previous) {
+		if (current->value == valueToRemove && !previous) {			// first case
 			head = head->next;
 			delete current;
 			current = NULL;
 			return true;
-		} else if (current->value == valueToRemove && previous) {
+		} else if (current->value == valueToRemove && previous) {	// middle and last case
 			previous->next = current->next;
 			delete current;
 			current = NULL;
@@ -98,17 +98,13 @@ void UnOrderedList<dataType>::print() {
 	cout << "The list contains the following " << this->count() << " elements: " << endl;
 	Node* current = head;
 
-	if (!current) {
-		return;
-	}
-
+	if (!current) { return; }
 
 	while (current->next) {
 		cout << current->value << ", ";
 		current = current->next;
 	}
-	cout << current->value;
-	cout << endl;
+	cout << current->value << endl;
 	return;
 }
 
@@ -142,7 +138,6 @@ int UnOrderedList<dataType>::find(const dataType checkValue) {
 
 template <class dataType>
 void UnOrderedList<dataType>::removeAll() {
-
 	while (head) {
 		Node* temp = head->next;
 		delete head;
@@ -156,9 +151,7 @@ bool UnOrderedList<dataType>::isInList(const dataType checkValue) {
 	Node* current = head;
 
 	while (current) {
-		if (current->value == checkValue) {
-			return true;
-		}
+		if (current->value == checkValue) { return true; }
 		current = current->next;
 	}
 	return false;
