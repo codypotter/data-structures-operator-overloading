@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Student.h" />
     <ClInclude Include="UnOrderedList.h" />
   </ItemGroup>
   <ItemGroup>

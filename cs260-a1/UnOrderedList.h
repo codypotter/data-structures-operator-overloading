@@ -1,40 +1,49 @@
+/*
+Program:	CS-260 A1
+Author:		Cody Potter
+Date:		2018-04-06
+Purpose:	Unordered List class for a singly linked list in
+			a generic template form
+*/
 #pragma once
 #include<iostream>
 
 using namespace std;
 
+template <class dataType>
 class UnOrderedList {
 public:
 	struct Node {
-		int value;
+		dataType value;
 		Node* next;
 	};
 	UnOrderedList();
 	~UnOrderedList();
-	void prepend(const int);
-	void append(const int);
-	bool remove(const int);
+	void prepend(const dataType);
+	void append(const dataType);
+	bool remove(const dataType);
 	void print();
 	int count();
-	int find(const int);
+	int find(const dataType);
 	void removeAll();
 private:
-	bool isInList(const int);
+	bool isInList(const dataType);
 	Node* head;
 };
 
-UnOrderedList::UnOrderedList() {
+template <class dataType>
+UnOrderedList<dataType>::UnOrderedList() {
 	head = NULL;
 }
 
-UnOrderedList::~UnOrderedList() {
+template <class dataType>
+UnOrderedList<dataType>::~UnOrderedList() {
 	this->removeAll();
 }
 
-void UnOrderedList::prepend(const int userValue) {
-	if (this->isInList(userValue)) {
-		return;
-	}
+template <class dataType>
+void UnOrderedList<dataType>::prepend(const dataType userValue) {
+	if (this->isInList(userValue)) { return; }
 	Node* newNode = new Node;
 	newNode->value = userValue;
 	newNode->next = head;
@@ -42,44 +51,57 @@ void UnOrderedList::prepend(const int userValue) {
 	head = newNode;
 }
 
-void UnOrderedList::append(const int userValue) {
-	if (this->isInList(userValue)) {
-		return;
-	}
+template <class dataType>
+void UnOrderedList<dataType>::append(const dataType userValue) {
+	if (this->isInList(userValue)) { return; }
+	Node* current = head;
 	Node* newNode = new Node;
 	newNode->value = userValue;
 	newNode->next = NULL;
 
 	if (!head) {
 		head = newNode;
-		return;
 	} else {
-		Node* last = head;
-		while (last->next) {
-			last = last->next;
-		}
-		last->next = newNode;
+		while (current->next) { current = current->next; }
+		current->next = newNode;
 	}
+
 }
 
-bool UnOrderedList::remove(const int numToRemove) {
+template <class dataType>
+bool UnOrderedList<dataType>::remove(const dataType valueToRemove) {
 	Node* current = head;
-	Node* previous = current;
+	Node* previous = NULL;
+
 	while (current) {
-		if (current->value == numToRemove) {
+		if (current->value == valueToRemove && !previous) {
+			head = head->next;
+			delete current;
+			current = NULL;
+			return true;
+		} else if (current->value == valueToRemove && previous) {
 			previous->next = current->next;
 			delete current;
+			current = NULL;
 			return true;
 		}
 		previous = current;
 		current = current->next;
 	}
-	return false;;
+
+	if (!current && !previous) { return false; }
+	return false;
 }
 
-void UnOrderedList::print() {
+template <class dataType>
+void UnOrderedList<dataType>::print() {
 	cout << "The list contains the following " << this->count() << " elements: " << endl;
 	Node* current = head;
+
+	if (!current) {
+		return;
+	}
+
 
 	while (current->next) {
 		cout << current->value << ", ";
@@ -87,49 +109,54 @@ void UnOrderedList::print() {
 	}
 	cout << current->value;
 	cout << endl;
+	return;
 }
 
-int UnOrderedList::count() {
-	int count = 0;
-	if (head) {
-		Node* current = head;
-		count = 1;
-		while (current->next) {
-			current = current->next;
-			count++;
-		}
+template <class dataType>
+int UnOrderedList<dataType>::count() {
+	int count = 1;
+	Node* current = head;
+	if (!current) {
+		return 0;
+	}
+	while (current) {
+		count++;
+		current = current->next;
 	}
 	return count;
 }
 
-int UnOrderedList::find(const int checkNumber) {
+template <class dataType>
+int UnOrderedList<dataType>::find(const dataType checkValue) {
 	Node* current = head;
 	int positionTracker = 1;
 	while (current->next) {
 		current = current->next;
 		positionTracker++;
-		if (current->value == checkNumber) {
+		if (current->value == checkValue) {
 			return positionTracker;
 		}
 	}
 	return 0;
 }
 
-void UnOrderedList::removeAll() {
-	Node* current = head;
-	while (current->next) {
-		Node* toDelete = current;
-		current = current->next;
-		delete toDelete;
+template <class dataType>
+void UnOrderedList<dataType>::removeAll() {
+
+	while (head) {
+		Node* temp = head->next;
+		delete head;
+		head = temp;
 	}
 	head = NULL;
 }
 
-bool UnOrderedList::isInList(const int checkNumber) {
+template <class dataType>
+bool UnOrderedList<dataType>::isInList(const dataType checkValue) {
 	Node* current = head;
 
 	while (current) {
-		if (current->value == checkNumber) {
+		if (current->value == checkValue) {
 			return true;
 		}
 		current = current->next;
